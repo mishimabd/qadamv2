@@ -1,19 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:qadamv2/theme.dart';
-
 import '../widgets/builderItem2.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+
+  HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   List catNames = [
     'Category',
     'Classes',
-    'Free Course',
+    'Quizzes',
     'BookStore',
     'Live Course',
     'LeaderBoard',
   ];
 
-  List<Color> catColors = [
+  List catRoutes = [
+    '/home',
+    '/home',
+    '/quiz',
+    '/home',
+    '/home',
+    '/home',
+  ];
+
+  List<Color> catColors = const [
     Color(0xffffcf2f),
     Color(0xff6fe08d),
     Color(0xff61bdfd),
@@ -22,7 +39,7 @@ class HomeScreen extends StatelessWidget {
     Color(0xff78e667),
   ];
 
-  List<Icon> catIcons = [
+  List<Icon> catIcons = const [
     Icon(Icons.category, color: Colors.white, size: 30),
     Icon(Icons.video_library, color: Colors.white, size: 30),
     Icon(Icons.assignment, color: Colors.white, size: 30),
@@ -30,6 +47,8 @@ class HomeScreen extends StatelessWidget {
     Icon(Icons.play_circle_fill, color: Colors.white, size: 30),
     Icon(Icons.emoji_events, color: Colors.white, size: 30),
   ];
+
+
 
   List imgList = ['Flutter', 'React Native', 'Python', 'C#'];
 
@@ -41,8 +60,9 @@ class HomeScreen extends StatelessWidget {
       body: ListView(
         children: [
           Container(
-            padding: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
-            decoration: BoxDecoration(
+            padding:
+                const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
+            decoration: const BoxDecoration(
               color: Color(0xff674aef),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
@@ -55,9 +75,14 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      Icons.dashboard,
-                      size: 30,
+                    InkWell(
+                      child: Icon(
+                        Icons.dashboard,
+                        size: 30,
+                      ),
+                      onTap: () {
+                        ZoomDrawer.of(context)!.toggle();
+                      },
                     ),
                     Icon(
                       Icons.notifications,
@@ -65,10 +90,10 @@ class HomeScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(left: 3, bottom: 15),
                   child: Text(
                     'Hi, Programmer',
@@ -80,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 5, bottom: 20),
+                  margin: const EdgeInsets.only(top: 5, bottom: 20),
                   width: MediaQuery.of(context).size.width,
                   height: 55,
                   alignment: Alignment.center,
@@ -121,16 +146,21 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: catColors[index],
-                              shape: BoxShape.circle,
+                          InkWell(
+                            child: Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: catColors[index],
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: catIcons[index],
+                              ),
                             ),
-                            child: Center(
-                              child: catIcons[index],
-                            ),
+                            onTap: (){
+                              Navigator.of(context).pushNamed(catRoutes[index]);
+                            },
                           ),
                           const SizedBox(
                             height: 10,

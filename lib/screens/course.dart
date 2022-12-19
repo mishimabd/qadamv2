@@ -50,7 +50,7 @@ class _CourseScreenState extends State<CourseScreen> {
               ),
               child: Center(
                 child: Container(
-                  padding: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(2),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
@@ -58,13 +58,13 @@ class _CourseScreenState extends State<CourseScreen> {
                   child: const Icon(
                     Icons.play_arrow_rounded,
                     color: Color(0xff674aef),
-                    size: 45,
+                    size: 30,
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 10),
-            Text(
+            const Text(
               'Flutter Complete Course',
               style: TextStyle(
                 fontSize: 22,
@@ -72,7 +72,7 @@ class _CourseScreenState extends State<CourseScreen> {
               ),
             ),
             const SizedBox(height: 5),
-            Text(
+            const Text(
               'Created by Abdullaev Alisher',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
@@ -107,8 +107,8 @@ class _CourseScreenState extends State<CourseScreen> {
                       },
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 35),
-                        child: Text(
+                            const EdgeInsets.symmetric(vertical: 15, horizontal: 35),
+                        child: const Text(
                           'Lessons',
                           style: TextStyle(
                             fontSize: 18,
@@ -132,7 +132,7 @@ class _CourseScreenState extends State<CourseScreen> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 25),
-                        child: Text(
+                        child: const Text(
                           'Description',
                           style: TextStyle(
                             fontSize: 18,
