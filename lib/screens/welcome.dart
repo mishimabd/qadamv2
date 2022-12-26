@@ -82,7 +82,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Text(
-                        'Learning with pleasure with dear programmer, wherever you are ',
+                        'Code anywhere. Faster. Together. ',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 17,

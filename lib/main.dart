@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:qadamv2/screens/admin.dart';
 import 'package:qadamv2/screens/course.dart';
 import 'package:qadamv2/screens/home.dart';
 import 'package:qadamv2/screens/login.dart';
+import 'package:qadamv2/screens/profile.dart';
 import 'package:qadamv2/screens/quiz.dart';
 import 'package:qadamv2/screens/result.dart';
 import 'package:qadamv2/screens/signup.dart';
@@ -16,7 +18,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUpScreen(),
         '/home': (context) => ZoomScreen(),
         '/quiz': (context) => QuizScreen(),
+        '/profile': (context) => ProfileScreen(),
+        '/admin': (context) => AdminScreen(),
       },
     );
   }

@@ -1,45 +1,96 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class User{
-  int id;
-  String name;
-  String surname;
-  String email;
+class User {
+  int? iD;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  String? name;
+  String? surname;
+  String? email;
+  String? password;
 
-  User(this.id, this.name, this.surname, this.email);
+  User(
+      {this.iD,
+        this.createdAt,
+        this.updatedAt,
+        this.deletedAt,
+        this.name,
+        this.surname,
+        this.email,
+        this.password});
 
+  User.fromJson(Map<String, dynamic> json) {
+    iD = json['ID'];
+    createdAt = json['CreatedAt'];
+    updatedAt = json['UpdatedAt'];
+    deletedAt = json['DeletedAt'];
+    name = json['name'];
+    surname = json['surname'];
+    email = json['Email'];
+    password = json['password'];
+  }
 
-  factory User.fromJson(Map json) {
-    return User(
-        json['id'],
-        json['name'],
-        json['surname'],
-        json['email']
-    );
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ID'] = this.iD ;
+    data['CreatedAt'] = this.createdAt;
+    data['UpdatedAt'] = this.updatedAt;
+    data['DeletedAt'] = this.deletedAt;
+    data['name'] = this.name;
+    data['surname'] = this.surname;
+    data['Email'] = this.email;
+    data['password'] = this.password;
+    return data;
   }
 }
 
-class ProductService {
-  final String productsURL = 'http://localhost:8080/users';
-  final Dio dio = Dio();
+abstract class Repository {
+  Future<List<User>> getUserList();
+  Future<String> createUser(User user);
+}
 
-  ProductService();
+class UserRepository implements Repository {
+  String dataURL = 'http://192.168.1.144:8080';
 
-  Future<List<User>> getProducts() async {
-    late List<User> users;
-    try {
-      final res = await dio.get(productsURL);
-
-      users = res.data['products']
-          .map<User>(
-            (item) => User.fromJson(item),
-      )
-          .toList();
+  @override
+  Future<List<User>> getUserList() async {
+    List<User> userList = [];
+    var url = Uri.parse('${dataURL}/admin/users');
+    var response = await http.get(url);
+    print('status code: ${response.statusCode}');
+    var body = jsonDecode(response.body);
+    for (var i = 0; i < body.length; i++) {
+      // userList.add(User.fromJson(body[i]));
+      print('body : $body \n body[0] : ${body[0]}');
     }
-    on DioError catch(e) {
-      print(e.message);
-    }
+    return userList;
+  }
 
-    return users;
+  @override
+  Future<String> createUser(User user) async {
+    var url = Uri.parse('${dataURL}/admin/create');
+    var response = await http.post(url, body: user.toJson);
+    print('status code: ${response.statusCode}');
+    print('status code: ${response.body}');
+    return 'true';
+  }
+
+
+}
+
+class UserController {
+  final Repository _repository;
+
+  UserController(this._repository);
+
+  Future<List<User>> fetchUserList() async {
+    return _repository.getUserList();
+  }
+
+  Future<String> postUser(User user) async{
+    return _repository.createUser(user);
   }
 }

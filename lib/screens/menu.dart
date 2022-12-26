@@ -10,12 +10,25 @@ class MenuScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ListTile(
-            title: Text('Profile'), leading: Icon(Icons.person),
+          InkWell(
+            child:ListTile(
+              title: Text('Profile'), leading: Icon(Icons.person),
+            ),
+            onTap: (){
+              Navigator.of(context).pushNamed('/profile');
+            },
           ),
           ListTile(
             title: Text('Setting'), leading: Icon(Icons.settings),
-          )
+          ),
+          InkWell(
+            child:ListTile(
+              title: Text('Admin'), leading: Icon(Icons.admin_panel_settings),
+            ),
+            onTap: (){
+              Navigator.of(context).pushNamed('/admin');
+            },
+          ),
         ],
       )
     );

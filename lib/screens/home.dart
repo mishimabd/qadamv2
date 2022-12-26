@@ -5,7 +5,7 @@ import '../widgets/builderItem2.dart';
 
 class HomeScreen extends StatefulWidget {
 
-  HomeScreen({super.key});
+  HomeScreen({key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

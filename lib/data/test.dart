@@ -1,66 +1,14 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
-
-class User {
-  final int id;
-  final String name;
-  final String surname;
-  final String email;
-
-  const User({
-    required this.id,
-    required this.name,
-    required this.surname,
-    required this.email,
-  });
-
-
-  factory User.fromJson(Map json) {
-    return User(
-        id: json['id'],
-        name: json['name'],
-        surname: json['surname'],
-        email: json['email']
-    );
-  }
-}
-
-class ProductService {
-  final String productsURL = 'http://172.20.10.5:8080/users';
-  final Dio dio = Dio();
-
-  ProductService();
-
-  Future<List<User>> getProducts() async {
-    late List<User> products;
-    try {
-      final res = await dio.get(productsURL);
-      print('1');
-      products = res.data['users']
-          .map<User>(
-            (item) => User.fromJson(item),
-      )
-          .toList();
-    }
-    on DioError catch(e) {
-      products = [];
-      print(e);
-    }
-
-    return products;
-  }
-}
+import '../models/user.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final _productService = ProductService();
-
   @override
   Widget build(BuildContext context) {
-    const title = 'User List';
-
+    var userController = UserController(UserRepository());
+    userController.fetchUserList();
+    const title = 'Product List';
     return MaterialApp(
       title: title,
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xffdddddd)),
@@ -69,24 +17,48 @@ class MyApp extends StatelessWidget {
           title: const Text(title),
         ),
         body: FutureBuilder<List<User>>(
-          future: _productService.getProducts(),
+          future: userController.fetchUserList(),
           builder: (context, snapshot) {
-            var products = snapshot.data ?? [];
-
-            if(!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
-
-            return ListView.builder(
-              itemCount: products.length,
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('error'),
+              );
+            }
+            return ListView.separated(
               itemBuilder: (context, index) {
-                var product = products[index];
-                return ListTile(
-                    title: Text(products[index].name),
-                    subtitle: Text('${product.id} ${product.surname}'),
-                    trailing: Text('${product.email}')
+                var user=snapshot.data?[index];
+                return Container(
+                  height: 100,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Expanded(flex: 1,child: Text('a')),
+                      Expanded(flex: 3,child: Text('a')),
+                      Expanded(flex: 3,child: Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.orange,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          )
+                        ],
+                      )),
+                    ],
+                  ),
                 );
               },
+              separatorBuilder: (context, index) {
+                return Divider(thickness: 0.5, height: 0.5);
+              },
+              itemCount: snapshot.data?.length ?? 0,
             );
           },
         ),
@@ -94,4 +66,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
