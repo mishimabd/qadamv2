@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class User {
   int? iD;
@@ -24,13 +21,13 @@ class User {
 
   User.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
-    createdAt = json['CreatedAt'];
-    updatedAt = json['UpdatedAt'];
-    deletedAt = json['DeletedAt'];
-    name = json['name'];
-    surname = json['surname'];
-    email = json['Email'];
-    password = json['password'];
+    createdAt = json['CreatedAt'].toString();
+    updatedAt = json['UpdatedAt'].toString();
+    deletedAt = json['DeletedAt'].toString();
+    name = json['name'].toString();
+    surname = json['surname'].toString();
+    email = json['Email'].toString();
+    password = json['password'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -47,50 +44,3 @@ class User {
   }
 }
 
-abstract class Repository {
-  Future<List<User>> getUserList();
-  Future<String> createUser(User user);
-}
-
-class UserRepository implements Repository {
-  String dataURL = 'http://192.168.1.144:8080';
-
-  @override
-  Future<List<User>> getUserList() async {
-    List<User> userList = [];
-    var url = Uri.parse('${dataURL}/admin/users');
-    var response = await http.get(url);
-    print('status code: ${response.statusCode}');
-    var body = jsonDecode(response.body);
-    for (var i = 0; i < body.length; i++) {
-      // userList.add(User.fromJson(body[i]));
-      print('body : $body \n body[0] : ${body[0]}');
-    }
-    return userList;
-  }
-
-  @override
-  Future<String> createUser(User user) async {
-    var url = Uri.parse('${dataURL}/admin/create');
-    var response = await http.post(url, body: user.toJson);
-    print('status code: ${response.statusCode}');
-    print('status code: ${response.body}');
-    return 'true';
-  }
-
-
-}
-
-class UserController {
-  final Repository _repository;
-
-  UserController(this._repository);
-
-  Future<List<User>> fetchUserList() async {
-    return _repository.getUserList();
-  }
-
-  Future<String> postUser(User user) async{
-    return _repository.createUser(user);
-  }
-}

@@ -43,6 +43,7 @@ dependencies:
   postgres: ^2.5.2
   http: ^0.13.5
   json_annotation: ^4.0.1
+  flutter_secure_storage: ^7.0.1
 
 dev_dependencies:
 

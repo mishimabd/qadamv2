@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../services/users_services.dart';
 import '../theme.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -10,12 +11,15 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   final _loginFocus = FocusNode();
   final _passwordFocus = FocusNode();
+  final storage = FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
-    Size size= MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Center(
         child: Padding(
@@ -31,11 +35,16 @@ class _LogInScreenState extends State<LogInScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: size.width*0.15,
+                          width: size.width * 0.15,
                           child: Image.asset("assets/images/qadam.jpg"),
                         ),
-                        SizedBox(width: 10,),
-                        Text('Qadam', style: QadamTheme.textTheme.headline1,)
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Qadam',
+                          style: QadamTheme.textTheme.headline1,
+                        )
                       ],
                     ),
                     const SizedBox(height: 55),
@@ -56,8 +65,10 @@ class _LogInScreenState extends State<LogInScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20, right: 10),
                         child: TextField(
+                          controller: emailController,
                           keyboardType: TextInputType.emailAddress,
                           focusNode: _loginFocus,
+                          style: TextStyle(color: QadamTheme.textColor04),
                           onSubmitted: (String text) {
                             _passwordFocus.requestFocus();
                           },
@@ -81,6 +92,8 @@ class _LogInScreenState extends State<LogInScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20, right: 10),
                         child: TextField(
+                          style: TextStyle(color: QadamTheme.textColor04),
+                          controller: passwordController,
                           focusNode: _passwordFocus,
                           obscureText: true,
                           decoration: InputDecoration(
@@ -97,7 +110,10 @@ class _LogInScreenState extends State<LogInScreen> {
                 Column(
                   children: [
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                       // final token= UserService.login(
+                       //      emailController.text, passwordController.text);
+
                         Navigator.of(context).pushReplacementNamed('/home');
                       },
                       child: Container(
