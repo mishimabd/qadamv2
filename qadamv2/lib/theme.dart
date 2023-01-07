@@ -7,6 +7,7 @@ class QadamTheme {
   static Color textColor05 = Color.fromRGBO(93, 176, 117, 1);
   static Color textColor06 = Color.fromRGBO(75, 148, 96, 1);
   static Color textColor07 = Color(0xff282c35);
+  static Color textColor08 = Color(0xff674aef);
 
   static TextTheme textTheme = TextTheme(
     bodyText1: TextStyle(
