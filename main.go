@@ -1,11 +1,11 @@
 package main
 
 import (
-	"GoLang/controllers"
-	"GoLang/initializers"
-	"GoLang/middleware"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
+	"qadamv2/controllers"
+	"qadamv2/initializers"
+	"qadamv2/middleware"
 )
 
 func init() {

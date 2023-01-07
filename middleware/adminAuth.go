@@ -1,13 +1,13 @@
 package middleware
 
 import (
-	"GoLang/initializers"
-	"GoLang/models"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	"net/http"
 	"os"
+	"qadamv2/initializers"
+	"qadamv2/models"
 	"time"
 )
 

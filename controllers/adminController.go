@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"GoLang/initializers"
-	"GoLang/models"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
+	"qadamv2/initializers"
+	"qadamv2/models"
 )
 
 func CreateUser(c *gin.Context) {

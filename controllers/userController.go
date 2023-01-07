@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"GoLang/initializers"
-	"GoLang/models"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"os"
+	"qadamv2/initializers"
+	"qadamv2/models"
 	"time"
 )
 
