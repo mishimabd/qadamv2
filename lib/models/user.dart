@@ -1,4 +1,3 @@
-
 class User {
   int? iD;
   String? createdAt;
@@ -8,6 +7,7 @@ class User {
   String? surname;
   String? email;
   String? password;
+  bool? role;
 
   User(
       {this.iD,
@@ -17,22 +17,24 @@ class User {
         this.name,
         this.surname,
         this.email,
-        this.password});
+        this.password,
+        this.role});
 
   User.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
-    createdAt = json['CreatedAt'].toString();
-    updatedAt = json['UpdatedAt'].toString();
-    deletedAt = json['DeletedAt'].toString();
-    name = json['name'].toString();
-    surname = json['surname'].toString();
-    email = json['Email'].toString();
-    password = json['password'].toString();
+    createdAt = json['CreatedAt'];
+    updatedAt = json['UpdatedAt'];
+    deletedAt = json['DeletedAt'];
+    name = json['name'];
+    surname = json['surname'];
+    email = json['Email'];
+    password = json['password'];
+    role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD ;
+    data['ID'] = this.iD;
     data['CreatedAt'] = this.createdAt;
     data['UpdatedAt'] = this.updatedAt;
     data['DeletedAt'] = this.deletedAt;
@@ -40,6 +42,7 @@ class User {
     data['surname'] = this.surname;
     data['Email'] = this.email;
     data['password'] = this.password;
+    data['role'] = this.role;
     return data;
   }
 }

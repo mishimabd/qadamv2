@@ -89,7 +89,7 @@ class ShowOneUserDialog extends StatelessWidget {
         ElevatedButton(
           onPressed: () async {
             final user = await UserService.getUser(_idController.text);
-            _idController.text='';
+            _idController.text = '';
             showDialog(
               context: context,
               builder: (context) => OneUserDialog(user: user),
@@ -181,7 +181,7 @@ class _ShowUserDialogState extends State<ShowUserDialog> {
               foregroundColor: MaterialStateProperty.all(Colors.white)),
         )
       ],
-      contentPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       content: Visibility(
         visible: users.isNotEmpty,
         replacement: Center(
@@ -235,11 +235,13 @@ class DeleteUserDialog extends StatelessWidget {
 
   @override
   final idcontroller = TextEditingController();
+  final idFocusController=FocusNode();
 
   Future<void> deleteUserById(String id) async {
     final isSuccess = await UserService.deleteUserById(id);
     if (isSuccess) {
       print('User successfully deleted!');
+      idcontroller.text='';
     } else {
       print('Error');
     }
@@ -259,6 +261,7 @@ class DeleteUserDialog extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 20, right: 10),
             child: TextField(
+              focusNode:idFocusController ,
               controller: idcontroller,
               style: TextStyle(
                   color: Colors.black.withOpacity(0.7),
@@ -277,7 +280,7 @@ class DeleteUserDialog extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             deleteUserById(idcontroller.text);
-            Navigator.pop(context);
+            FocusScope.of(context).requestFocus(idFocusController);
           },
           child: Text('Удалить'),
           style: ButtonStyle(
@@ -308,7 +311,8 @@ class _CreateUserDialogState extends State<CreateUserDialog> {
     final name = nameController.text;
     final surname = surnameController.text;
     final email = emailController.text;
-    await UserService.createUser(name, surname, email);
+    final body = {"name": name, "surname": surname, "Email": email};
+    await UserService.createUser(body) ? print('success') : print('og no ');
   }
 
   @override
