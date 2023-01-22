@@ -11,6 +11,12 @@ import (
 	"time"
 )
 
+func Hello(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"hello": "hello",
+	})
+}
+
 func SignUp(c *gin.Context) {
 	//create struct for users
 	//password will be hashed by JWT
